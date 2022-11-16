@@ -1,10 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './fontello/css/fontello.css';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // Pages
 import Frontpage from './pages/frontpage';
+import AddOrder from './pages/orders';
 import NoPage from './pages/404';
 
 // Styles
@@ -16,6 +18,7 @@ export default function App() {
       <Routes>
         <Route path='/'>
           <Route index element={<Frontpage />} />
+          <Route path='orders' element={<AddOrder />} />
           <Route path='*' element={<NoPage />} />
         </Route>
       </Routes>

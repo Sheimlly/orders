@@ -1,1 +1,35 @@
 @import 'variables';
+
+.addorder{
+    &__table{
+        background: gray;
+        border: 1px solid black;
+        color: wheat;
+
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.addFood,
+.addOrder {
+    cursor: pointer;
+}
+
+.editFoodCount {
+    display: inline;
+}
+
+.food-count {
+    max-width: 75px;
+}
+
+.orderslist {
+    color: white !important;
+    h3 {
+        margin-top: 25px;
+    }
+    p{
+        margin-bottom: 0;
+    }
+}

@@ -1,3 +1,6 @@
+import OrdersList from "./order"
+import AddOrder from "./orders"
+
 const Header = () => {
     return(
         <>
@@ -13,9 +16,10 @@ const Body = () => {
         <>
             {/* I'm not sure about it but  */}
             <section className="container">
-                <p>Zamówienia</p>
-                {/* z z kropką mi nei działą :( */}
-                <p>Złóz zamówienie</p>
+                <div className="row">
+                    <div className="col-6"><AddOrder /></div>
+                    <div className="col-6"><OrdersList /></div>
+                </div>
             </section>
         </>
     )

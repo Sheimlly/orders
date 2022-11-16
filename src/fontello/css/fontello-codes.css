@@ -1,0 +1,6 @@
+
+.icon-up-small:before { content: '\e800'; } /* '' */
+.icon-right-small:before { content: '\e801'; } /* '' */
+.icon-left-small:before { content: '\e802'; } /* '' */
+.icon-down-small:before { content: '\e803'; } /* '' */
+.icon-cancel:before { content: '\e804'; } /* '' */
