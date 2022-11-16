@@ -1,0 +1,40 @@
+// $first-color: #D890F5;
+// $second-color: #D0C7FF;
+// $accent-color: #EBE2A0;
+@import 'variables';
+
+html, body {
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+    padding-top: 85px;
+}
+
+section {
+    padding: 50px 0;
+}
+
+h1{
+    font-size: 56px;
+    font-weight: 700;
+}
+h2{
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.section-title {
+    margin-bottom: 25px;
+}
