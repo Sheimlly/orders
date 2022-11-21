@@ -1,22 +1,5 @@
-import React, {useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import '../styles/orders.scss';
-
-const tables = [
-    {table_id: 1, name: 'Stolik 1'},
-    {table_id: 2, name: 'Stolik 2'},
-    {table_id: 3, name: 'Stolik 3'},
-    {table_id: 4, name: 'Stolik 4'},
-    {table_id: 5, name: 'Stolik 5'},
-    {table_id: 6, name: 'Stolik 6'},
-]
-
-const food_list = [
-    {name: 'Spaghetti', price: 20},
-    {name: 'Pizza', price: 15},
-    {name: 'Owoce morza', price: 75},
-    {name: 'Rosół', price: 10},
-    {name: 'Pierogi z mięsen', price: 15}
-]
 
 const FoodList = ({food, addFood, deleteFood}) => {
     return (
@@ -62,7 +45,8 @@ const OrdersList = ({orders, addOrder, deleteOrder}) => {
     
 }
 
-const AddOrder = () => {
+const AddOrder = (props) => {
+    const [sessionStorageOrders, setSessionStorageOrders] = useState([]);
     const [orders, setOrders] = useState([]);
     const [order, setOrder] = useState({
         table: "",
@@ -70,21 +54,17 @@ const AddOrder = () => {
         total: 0
     });
     const [food, setFood] = useState({
+        food_id: 0,
         name: "",
         price: 0,
         count: 0
     })
 
-    const updateOrderState = (index) => {
-        setOrder(previousValue => {
-            return {...previousValue, table: tables[index]};
-        })
-    }
-
+    // Update food state
     const updateFoodState = (value, target) => {
         if(target==='food') {
             setFood(previousValue => {
-                return {...previousValue, name: food_list[value].name, price: food_list[value].price }
+                return {...previousValue, food_id: props.food_list[value].food_id, name: props.food_list[value].name, price: props.food_list[value].price }
             })
         }
         setFood(previousValue => {
@@ -92,6 +72,14 @@ const AddOrder = () => {
         })
     }
 
+    // Order state update
+    const updateOrderState = (index) => {
+        setOrder(previousValue => {
+            return {...previousValue, table: props.tables[index]};
+        })
+    }
+
+    // Manage food in order state
     const addFood = () => {
         if (food.name != "") {
             var f = [...order.food];
@@ -104,6 +92,7 @@ const AddOrder = () => {
         }
     }
 
+
     const deleteFood = (value) => {
         var f = [...order.food];
         var index = f.indexOf(value);
@@ -115,10 +104,11 @@ const AddOrder = () => {
         })
     }
 
+    // Manage orders
     const addOrder = () => {
         console.log(order);
         if (order.table != "" && order.total > 0) {
-            setOrders((d) => [...d, order])
+            setOrders((o) => [...o, order])
             setOrder(previousValue => {
                 return {...previousValue, table: "", food: [], total: 0 }
             })
@@ -133,16 +123,25 @@ const AddOrder = () => {
         );
     }
 
+    // Add orders to session storage
     const addOrders = () => {
-        orders.map((o) => {
-            sessionStorage.setItem(o.table.name, o);
-        })
+        // setSessionStorageOrders((o) => [...o, orders]);
+        
+        sessionStorage.setItem('orders', JSON.stringify([...sessionStorageOrders, ...orders]));
     }
+
+    useEffect(() => {
+        const storage_orders = JSON.parse(sessionStorage.getItem('orders'));
+        if (storage_orders) {
+            setSessionStorageOrders(storage_orders);
+            console.log(sessionStorageOrders);
+        }
+    }, []);
 
     return (
         <>
             <h2>Dodaj zamówienie</h2>
-            <div className='py-2 mb-3 addorder__table'>
+            <div className='py-2 px-2 mb-3 addorder__table'>
                 <form className='d-flex flex-column' onSubmit={addOrders}>
                     <label>
                         <span>Stolik:</span>
@@ -150,11 +149,10 @@ const AddOrder = () => {
                             onChange={e => updateOrderState(e.target.value) }
                             required
                         >
-                        {
-                            Object.keys(tables).map((key) => (
-                                <option key={key} value={key}>{tables[key].name}</option>
-                            ))
-                        }
+                        <option hidden>--- Wybierz stolik ---</option>
+                        {props.tables.map((table, key) => (
+                            <option key={key} value={key}>{table.name}</option>
+                        ))}
                         </select>
                     </label>
                     
@@ -164,11 +162,10 @@ const AddOrder = () => {
                             onChange={e => updateFoodState(e.target.value, 'food') }
                             required
                         >
-                        {
-                            Object.keys(food_list).map((key) => (
-                                <option key={key} value={key}>{food_list[key].name}, Cena: {food_list[key].price}</option>
-                            ))
-                        }
+                        <option hidden>--- Wybierz jedzenie ---</option>
+                        {props.food_list.map((f, key) => (
+                            <option key={key} value={key}>{f.name}, Cena: {f.price}</option>
+                        ))}
                         </select>
 
                         <span>Ilość: </span>

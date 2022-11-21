@@ -33,3 +33,33 @@
         margin-bottom: 0;
     }
 }
+
+.orders_list {
+    &--order {
+        background: gray;
+        color: wheat;
+    }   
+}
+.order-food-list{
+    &:nth-of-type(even) {
+        background: black !important;
+    }
+
+    &--edit {
+        color: white;
+    }
+
+    &__button {
+        cursor: pointer;
+    }
+}
+
+.orders_list--order__buttons {
+    cursor: pointer;
+}
+
+.checkout-button{
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+}

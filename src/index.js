@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // Pages
 import Frontpage from './pages/frontpage';
-import AddOrder from './pages/orders';
+import AddOrder from './pages/add_order';
 import NoPage from './pages/404';
 
 // Styles
